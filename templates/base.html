@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Johnny's Game Portal</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav>
+        <ul>
+            <li><a href="/">Hjem</a></li>
+            <li><a href="/leaderboard">Leaderboards</a></li>
+            {% if session.get('username') %}
+                <li><a href="/logout">Logg ut</a></li>
+                <b><li> User: {{ username }}</li></b>
+            {% else %}
+                <li><a href="/login">Logg inn</a></li>
+                <li><a href="/register">Registrer</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+
+    <!-- Main content block -->
+    {% block content %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,291 @@
+/* Global styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    text-align: center;
+    user-select: none; 
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+}
+
+/* Navbar styling */
+nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin: 0 15px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav ul li a:hover {
+    color: #ddd;
+}
+
+/* Content area */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+p {
+    color: #666;
+}
+
+/* Card container styling for main page */
+.main-card-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Main page card styling */
+.main-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 300px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+}
+
+.main-card:hover {
+    transform: scale(1.05);
+}
+
+.game-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.button {
+    background-color: #00a9ff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.button:hover {
+    background-color: #1c92cd;
+}
+
+/* Form styling */
+form {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    max-width: 400px;
+    margin: 0 auto;
+    
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0 20px 0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #00a9ff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #1c92cd;
+}
+
+/* Flash message styling */
+.flash-message {
+    margin: 20px auto;
+    padding: 10px;
+    border-radius: 5px;
+    max-width: 400px;
+    text-align: center;
+}
+
+.flash-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.flash-message.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: -10px;
+    margin-bottom: 10px;
+}
+
+/* Footer styling */
+footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Chart container styling */
+.chart-container {
+    width: 40%;
+    height: 300px;
+    margin: 30px auto;
+}
+
+/* Memory Game Specific Styling */
+.memory-game-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.memory-game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.memory-card {
+    width: 100px;
+    height: 100px;
+    background-color: #333;
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.memory-card.flipped,
+.memory-card.matched {
+    background-color: #28a745;
+    color: #fff;
+    cursor: default;
+}
+
+#memoryResetButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#memoryResetButton:hover {
+    background-color: #555;
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 1.8em;
+    }
+
+    /* Stack layout for game container */
+    .game-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .upgrades-container {
+        width: 90%;
+    }
+
+    .clicker-container {
+        width: 100%;
+    }
+
+    /* Move the Click Button to the Top */
+    .clicker-container {
+        order: -1;
+        margin-bottom: 15px;
+    }
+
+    #clickButton {
+        font-size: 1.1em;
+        padding: 10px 20px;
+        width: 90%;
+    }
+
+    #narutoImage {
+        width: 150px;
+    }
+
+    #chakraCount, #rebirthCount {
+        font-size: 1.5em;
+    }
+}
+
+/* Smaller mobile (up to 480px) */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.6em;
+    }
+
+    .upgrade, #clickButton {
+        font-size: 0.9em;
+        padding: 10px;
+    }
+
+    #narutoImage {
+        width: 120px;
+    }
+}

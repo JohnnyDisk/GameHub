@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Welcome to the Game Portal!</h1>
+    
+    <div class="main-card-container">
+        <!-- Memory Game Card -->
+        <div class="main-card">
+            <img src="{{ url_for('static', filename='images/memory_game.png') }}" alt="Memory Game Image" class="game-image">
+            <h2>Memory Game</h2>
+            <p>Test your memory skills by matching pairs of cards.</p>
+            <a href="{{ url_for('spill1') }}" class="button">Play Memory Game</a>
+            <p id="spill1_count">Played 0 times</p>
+        </div>
+
+        <!-- Game 2 Card (Placeholder) -->
+        <div class="main-card">
+            <img src="{{ url_for('static', filename='images/Naruto_banner.png') }}" alt="Coming Soon Image" class="game-image">
+            <h2>Naruto Clicker</h2>
+            <p>Collect chakra with each click and unlock powerful ninja upgrades!</p>
+            <a href="{{ url_for('spill2') }}" class="button">Play Naruto Clicker</a>
+            <p id="spill2_count">Played 0 times</p>
+        </div>
+    </div>
+
+    <!-- Chart to show play counts -->
+    <div class="chart-container">
+        <canvas id="myChart"></canvas>
+    </div>
+
+    <!-- Include Chart.js for the pie chart -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        let spill1_count = 0;
+        let spill2_count = 0;
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the pie chart
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Memory Game', 'Naruto Clicker'],
+                    datasets: [{
+                        label: 'Play Counts',
+                        data: [spill1_count, spill2_count],
+                        backgroundColor: ['#ff6384', '#36a2eb'],
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                }
+            });
+
+            // Update the chart with new data
+            function updateChart() {
+                myPieChart.data.datasets[0].data = [spill1_count, spill2_count];
+                myPieChart.update();
+            }
+
+            // Fetch initial play counts and update the chart
+            fetch('/get_counts')
+                .then(response => response.json())
+                .then(data => {
+                    spill1_count = data.spill1_count;
+                    spill2_count = data.spill2_count;
+                    document.getElementById('spill1_count').innerText = `Played ${spill1_count} times`;
+                    document.getElementById('spill2_count').innerText = `Played ${spill2_count} times`;
+                    updateChart();
+                });
+
+            // Handle Memory Game button click
+            document.getElementById('Spill1').addEventListener('click', function() {
+                fetch('/spill1', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    spill1_count = data.spill1_count;
+                    document.getElementById('spill1_count').innerText = `Played ${spill1_count} times`;
+                    updateChart();
+                });
+            });
+
+            // Handle Game 2 button click
+            document.getElementById('Spill2').addEventListener('click', function() {
+                fetch('/spill2', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    spill2_count = data.spill2_count;
+                    document.getElementById('spill2_count').innerText = `Played ${spill2_count} times`;
+                    updateChart();
+                });
+            });
+        });
+    </script>
+{% endblock %}

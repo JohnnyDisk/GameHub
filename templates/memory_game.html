@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Memory Game</h1>
+    <p>Guesses: <span id="guessCount">0</span></p>
+    <div class="game-board" id="gameBoard"></div>
+    <button id="resetButton">Reset Game</button> <!-- New reset button -->
+
+    <script>
+
+const gameBoard = document.getElementById('gameBoard');
+const guessCountElement = document.getElementById('guessCount');
+const resetButton = document.getElementById('resetButton'); // Get the reset button
+
+let cards = [];
+let firstCard = null;
+let secondCard = null;
+let guessCount = 0;
+
+// Generate a set of pairs (e.g., A, B, C, D)
+const symbols = ['🤓', '💀', '😂', '👌', '😈', '😎', '😵', '🥸'];
+let pairs = symbols.concat(symbols); // Create pairs
+
+// Shuffle the pairs randomly
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+// Create the card elements on the board
+function createBoard() {
+    gameBoard.innerHTML = ''; // Clear any existing cards
+    cards = []; // Reset the cards array
+    shuffledPairs = shuffle([...pairs]); // Shuffle a new set of pairs
+
+    shuffledPairs.forEach(symbol => {
+        const card = document.createElement('div');
+        card.classList.add('card');
+        card.dataset.symbol = symbol;
+        card.innerText = '?'; // Hide symbol initially
+        card.addEventListener('click', flipCard);
+        gameBoard.appendChild(card);
+        cards.push(card);
+    });
+}
+
+// Flip the card and check for matches
+function flipCard() {
+    if (this.classList.contains('flipped') || this.classList.contains('matched') || secondCard) return;
+
+    this.classList.add('flipped');
+    this.innerText = this.dataset.symbol;
+
+    if (!firstCard) {
+        // First card clicked
+        firstCard = this;
+    } else {
+        // Second card clicked
+        secondCard = this;
+        guessCount++;
+        guessCountElement.innerText = guessCount;
+
+        if (firstCard.dataset.symbol === secondCard.dataset.symbol) {
+            // Match found
+            firstCard.classList.add('matched');
+            secondCard.classList.add('matched');
+            resetCards();
+        } else {
+            // No match, flip back after a short delay
+            setTimeout(() => {
+                firstCard.classList.remove('flipped');
+                secondCard.classList.remove('flipped');
+                firstCard.innerText = '?';
+                secondCard.innerText = '?';
+                resetCards();
+            }, 1000);
+        }
+    }
+}
+
+// Reset first and second card selections
+function resetCards() {
+    firstCard = null;
+    secondCard = null;
+}
+
+// Reset the game when the reset button is clicked
+function resetGame() {
+    guessCount = 0;
+    guessCountElement.innerText = guessCount;
+    createBoard(); // Re-create the board with shuffled cards
+}
+
+resetButton.addEventListener('click', resetGame); // Add event listener to reset button
+
+// Initialize the game
+createBoard();
+
+
+    </script>
+
+    <style>
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f4f4f9;
+}
+
+h1 {
+    color: #333;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-gap: 10px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.card {
+    width: 100px;
+    height: 100px;
+    background-color: #333;
+    color: #fff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.card.flipped,
+.card.matched {
+    background-color: #28a745;
+    color: #fff;
+    cursor: default;
+}
+
+/* Reset button styling */
+#resetButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#resetButton:hover {
+    background-color: #555;
+}
+
+
+    </style>
+
+{% endblock %}
+

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Login</h2>
+    {% if username %}
+        <p>Du er allerede logget inn som {{ username }}.</p>
+        <a href="/">Gå til forsiden</a> | <a href="/logout">Logg ut</a>
+    {% else %}
+        <form method="POST">
+            Username: <input type="text" name="username" required><br>
+            Password: <input type="password" name="password" required><br>
+            <a href="/register">Har du ikke en konto? Register</a>
+            <button type="submit">Login</button>
+        </form>
+    {% endif %}
+{% endblock %}

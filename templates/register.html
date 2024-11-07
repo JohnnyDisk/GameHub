@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Registrer</h2>
+    {% if session.get('username') %}
+        <p>Du er allerede logget inn som {{ username }}.</p>
+        <a href="/">Gå til forsiden</a> | <a href="/logout">Logg ut</a>
+    {% else %}
+    <form method="POST">
+        <label for="username">Brukernavn:</label>
+        <input type="text" id="username" name="username" required><br>
+        <label for="password">Passord:</label>
+        <input type="password" id="password" name="password" required><br>
+        <label for="confirm_password">Bekreft passord:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required><br>
+      
+
+<!-- Vis flash-meldinger med feilmeldinger -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+    {% for category, message in messages %}
+        <p class="{{ category }}">{{ message }}</p>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+        <a href="/login">Har du allerede en konto? Log inn</a>
+        <button type="submit">Registrer</button>
+    </form>
+    {% endif %} 
+{% endblock %}

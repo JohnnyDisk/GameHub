@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Enter the OTP from your 2FA app</h2>
+    <form method="POST">
+        OTP: <input type="text" name="otp" required><br>
+        <button type="submit">Verify</button>
+    </form>
+</body>
+{% endblock %}
